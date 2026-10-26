@@ -787,6 +787,46 @@
     });
   }
 
+  /* ---------- letreiro das logos: cada metade da trilha mais larga que a tela ----------
+     A animação anda -50% e recomeça; se a metade for mais estreita que a janela
+     (monitor ultralargo), abre um vão vazio no fim de cada volta. Aqui a trilha
+     é remontada com quantas cópias forem precisas e a duração acompanha o
+     tamanho, para a velocidade continuar a mesma. */
+
+  var MARQUEE_SPEED = 42; // px por segundo
+  var marqueeUl = document.querySelector('#marquee ul');
+  var marqueeBase = marqueeUl ? Array.prototype.slice.call(marqueeUl.children, 0, marqueeUl.children.length / 2).map(function (li) { return li.cloneNode(true); }) : [];
+  var marqueeCopies = 0;
+
+  function layoutMarquee() {
+    if (!marqueeUl || !marqueeBase.length) return;
+    var first = marqueeUl.children[0];
+    var next = marqueeUl.children[marqueeBase.length];
+    if (!first || !next) return;
+    var setW = next.offsetLeft - first.offsetLeft;
+    if (setW <= 0) return;
+    var need = Math.max(1, Math.ceil((window.innerWidth + 200) / setW));
+    if (need !== marqueeCopies) {
+      marqueeCopies = need;
+      var frag = document.createDocumentFragment();
+      for (var h = 0; h < 2; h++) {
+        for (var c = 0; c < need; c++) {
+          marqueeBase.forEach(function (li) { frag.appendChild(li.cloneNode(true)); });
+        }
+      }
+      marqueeUl.textContent = '';
+      marqueeUl.appendChild(frag);
+    }
+    marqueeUl.style.animationDuration = Math.round(setW * marqueeCopies / MARQUEE_SPEED) + 's';
+  }
+
+  var marqueeTimer = 0;
+  window.addEventListener('resize', function () {
+    clearTimeout(marqueeTimer);
+    marqueeTimer = setTimeout(layoutMarquee, 200);
+  }, { passive: true });
+  layoutMarquee();
+
   /* ---------- pausar animações com a aba escondida ---------- */
 
   document.addEventListener('visibilitychange', function () {

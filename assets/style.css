@@ -226,7 +226,7 @@ main{position:relative;z-index:1}
 .marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 .marquee ul{display:flex;align-items:center;gap:4.5rem;list-style:none;margin:0;padding:0 2.25rem;width:max-content;animation:marquee 70s linear infinite}
 .marquee li{display:flex;align-items:center;height:56px}
-.marquee img{height:44px;width:auto;max-width:none;opacity:.88;transition:opacity .4s var(--ease-soft)}
+.marquee img{height:44px;width:auto;max-width:none;flex:none;opacity:.88;transition:opacity .4s var(--ease-soft)}
 .marquee img[src*="minimal-club"],.marquee img[src*="transfero"],.marquee img[src*="bagaggio"],.marquee img[src*="contratapj"]{height:34px}
 .marquee img[src*="first-class.png"],.marquee img[src*="monte-carlo"],.marquee img[src*="first-class-home"]{height:56px}
 .marquee:hover img{opacity:1}
