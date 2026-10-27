@@ -771,6 +771,8 @@
       if (!validar(etapa2)) return;
       formBox.classList.remove('falhou');
       btnEnviar.disabled = true;
+      var rotulo = btnEnviar.textContent;
+      btnEnviar.textContent = 'Enviando...';
       var fd = new FormData(form);
       var dados = {
         nome: fd.get('nome'), email: fd.get('email'), telefone: fd.get('telefone'),
@@ -780,7 +782,7 @@
         utm: utm(), gclid: param('gclid'), fbclid: param('fbclid')
       };
       var done = function () { formBox.classList.add('enviado'); window.location.assign('obrigado/'); };
-      var fail = function () { btnEnviar.disabled = false; formBox.classList.add('falhou'); };
+      var fail = function () { btnEnviar.disabled = false; btnEnviar.textContent = rotulo; formBox.classList.add('falhou'); };
       if (!LEAD_ENDPOINT) { fail(); return; }
       fetch(LEAD_ENDPOINT, {
         method: 'POST',
