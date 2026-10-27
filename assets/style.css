@@ -289,6 +289,7 @@ main{position:relative;z-index:1}
 .form .consent{display:flex;gap:.7rem;align-items:flex-start;font-family:var(--font-text);font-size:.9rem;letter-spacing:0;text-transform:none;color:var(--text-secondary)}
 .form .consent input{width:18px;height:18px;margin-top:.15rem;accent-color:var(--accent)}
 .form .acoes{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;margin-top:.4rem}
+.form .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .form .nota{font-size:.85rem;color:var(--text-secondary);margin-top:1rem}
 .form .sucesso{display:none;text-align:center;padding:1rem 0}
 .form .sucesso h3{font-size:1.4rem;margin-bottom:.6rem}

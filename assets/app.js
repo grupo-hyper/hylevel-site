@@ -37,10 +37,11 @@
   var HOLD_MS = 1800;
   var RELEASE_MS = 2400;
 
-  // Destino do pedido de convite. Vazio até o endpoint do HyperCRM existir:
-  // enquanto isso o formulário valida e mostra o estado de sucesso sem enviar.
-  var LEAD_ENDPOINT = '';
-  var LEAD_SECRET = '';
+  // Destino do pedido de convite: função hylevel-lead do HyperCRM (card no funil
+  // Hylevel Club, etapa Backlog). O valor do header é público por natureza (site
+  // estático); ele só barra varredura automática. Com o endereço vazio o envio falha à vista.
+  var LEAD_ENDPOINT = 'https://wcttnystjjozcpzovgiu.supabase.co/functions/v1/hylevel-lead';
+  var LEAD_SECRET = 'ca3a10c52b473f26c3d9fd426496188a647f0dc004577886';
 
   var hero = document.getElementById('topo');
   var stage = document.getElementById('stage');
@@ -761,6 +762,9 @@
       } catch (err) { /* sem query */ }
       return q;
     }
+    function param(k) {
+      try { return new URLSearchParams(window.location.search).get(k) || ''; } catch (err) { return ''; }
+    }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -771,12 +775,13 @@
       var dados = {
         nome: fd.get('nome'), email: fd.get('email'), telefone: fd.get('telefone'),
         empresa: fd.get('empresa'), cargo: fd.get('cargo'), indicacao: fd.get('indicacao') || '',
+        consentimento: fd.get('consentimento') === 'on', hl_campo: fd.get('hl_campo') || '',
         origem: 'site', pagina: window.location.pathname, referer: document.referrer || '',
-        utm: utm()
+        utm: utm(), gclid: param('gclid'), fbclid: param('fbclid')
       };
-      var done = function () { formBox.classList.add('enviado'); };
+      var done = function () { formBox.classList.add('enviado'); window.location.assign('obrigado/'); };
       var fail = function () { btnEnviar.disabled = false; formBox.classList.add('falhou'); };
-      if (!LEAD_ENDPOINT) { setTimeout(done, 600); return; }
+      if (!LEAD_ENDPOINT) { fail(); return; }
       fetch(LEAD_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-lp-secret': LEAD_SECRET },
