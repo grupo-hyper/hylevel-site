@@ -233,9 +233,13 @@ main{position:relative;z-index:1}
 @keyframes marquee{to{transform:translateX(-50%)}}
 
 /* 8.5 convidados */
-.convidados .lista{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem 3rem;margin-top:2.6rem;list-style:none;padding:0}
-.convidados li{padding:1rem 0;border-bottom:1px solid rgba(201,206,214,.1)}
-.convidados strong{display:block;font-family:var(--font-display);font-weight:500;font-size:1.3rem}
+.convidados .lista{display:grid;grid-template-columns:repeat(5,1fr);gap:2rem 1.4rem;margin-top:2.6rem;list-style:none;padding:0}
+.convidados li{padding:0 0 1rem;border-bottom:1px solid rgba(201,206,214,.1)}
+.convidados img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:3px;margin-bottom:1rem;background:rgba(201,206,214,.06);filter:grayscale(1) contrast(1.05);transition:filter .6s var(--ease-soft)}
+.convidados li:hover img{filter:none}
+.reveal.in .lista .part:nth-child(4){transition-delay:.27s}
+.reveal.in .lista .part:nth-child(5){transition-delay:.36s}
+.convidados strong{display:block;font-family:var(--font-display);font-weight:500;font-size:1.2rem;line-height:1.25;margin-bottom:.25rem}
 .convidados span{font-family:var(--font-cond);letter-spacing:.1em;text-transform:uppercase;font-size:.85rem;color:var(--text-secondary)}
 .depoimento{margin-top:3rem;padding:2rem 2.4rem;background:var(--panel);border-left:2px solid var(--accent);max-width:720px}
 .depoimento p{font-family:var(--font-display);font-weight:500;font-size:1.25rem;line-height:1.4}
@@ -335,6 +339,7 @@ main{position:relative;z-index:1}
 
 /* ---------- responsivo ---------- */
 @media (max-width:1024px){
+  .convidados .lista{grid-template-columns:repeat(3,1fr)}
   .nav-links{display:none}
   .nav-toggle{display:flex}
   /* com o menu aberto o backdrop-filter sai: ele viraria o bloco de contenção do menu fixo e o espremeria na barra */
@@ -353,7 +358,7 @@ main{position:relative;z-index:1}
 @media (max-width:720px){
   .nav .btn{display:none}
   .nav .logo{width:98px}
-  .convidados .lista{grid-template-columns:1fr}
+  .convidados .lista{grid-template-columns:1fr 1fr;gap:1.6rem 1rem}
   .formatos li{grid-template-columns:1fr;gap:.2rem}
   .tese-static .numeros{grid-template-columns:1fr}
   .cartao{transform:none}
